@@ -1,6 +1,7 @@
 package com.games._2048;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Game {
@@ -146,5 +147,14 @@ public class Game {
         }
         putTwoAtRandomEmptyPlaces();
         return true;
+    }
+
+    public boolean isWon(){
+        for (ArrayList<Integer> row: this.board) {
+            if(row.contains(128)){
+                return true;
+            }
+        }
+        return false;
     }
 }

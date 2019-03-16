@@ -21,6 +21,10 @@ public class Main {
             if (input.equals("q")) break;
             game.makeMove(input);
             printBoard(game.getBoard());
+            if(game.isWon()){
+                System.out.println("you won ");
+                break;
+            }
         }
     }
 
