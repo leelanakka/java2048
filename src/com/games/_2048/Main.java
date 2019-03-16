@@ -19,10 +19,12 @@ public class Main {
             System.out.println("Enter the which side you want to swipe ");
             String input = scanner.next();
             if (input.equals("q")) break;
-            game.makeMove(input);
+           if(!game.makeMove(input)){
+               System.out.println("Invalid input");
+           }
             printBoard(game.getBoard());
             if(game.isWon()){
-                System.out.println("you won ");
+                System.out.println("you won...! ");
                 break;
             }
         }
