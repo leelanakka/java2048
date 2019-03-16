@@ -18,7 +18,6 @@ public class Game {
         for (int i = 0; i < size; i++) {
             integers.add(addZeros(new ArrayList<>(), size));
         }
-        System.out.println(integers);
         return integers;
     }
 
