@@ -51,9 +51,33 @@ public class Game {
         return result;
     }
 
-    public ArrayList<Integer> moveLeft(ArrayList<Integer> integers) {
+    private ArrayList<Integer> moveLeft(ArrayList<Integer> integers) {
         return addZeros(addSameNeighbours(removeZeros(integers)), integers.size());
     }
 
+    private ArrayList<Integer> reverse(ArrayList<Integer> row){
+        ArrayList<Integer> reversedRow = new ArrayList<>(row);
+        for (int i = row.size()-1; i >= 0; i++) {
+            reversedRow.add(row.get(i));
+        }
+        return reversedRow;
+    }
 
+    private void reverseBoard(){
+        for (int row = 0; row < this.board.size(); row++) {
+            this.board.set(row,reverse(this.board.get(row)));
+        }
+    }
+
+    private void moveLeftBoard(){
+        for (int row = 0; row < this.board.size(); row++) {
+            this.board.set(row,moveLeft(this.board.get(row)));
+        }
+    }
+
+    private void moveRightBoard(){
+        reverseBoard();
+        moveLeftBoard();
+        reverseBoard();
+    }
 }
