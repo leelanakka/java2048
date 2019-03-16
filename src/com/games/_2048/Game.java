@@ -5,7 +5,24 @@ import java.util.List;
 
 public class Game {
 
-    private  ArrayList<Integer> addSameNeighbours(ArrayList<Integer> integers) {
+    private ArrayList<ArrayList<Integer>> board;
+    private String PlayerName;
+
+    public Game(String playerName, int size) {
+        this.board = initializeBoard(size);
+        this.PlayerName = playerName;
+    }
+
+    private ArrayList<ArrayList<Integer>> initializeBoard(int size) {
+        ArrayList<ArrayList<Integer>> integers = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            integers.add(addZeros(new ArrayList<>(), size));
+        }
+        System.out.println(integers);
+        return integers;
+    }
+
+    private ArrayList<Integer> addSameNeighbours(ArrayList<Integer> integers) {
         ArrayList<Integer> result = new ArrayList<>();
         for (int i = 0; i < integers.size(); i++) {
             if (i != integers.size() - 1 && integers.get(i).equals(integers.get(i + 1))) {
@@ -18,7 +35,7 @@ public class Game {
         return result;
     }
 
-    private  ArrayList<Integer> removeZeros(List<Integer> integers) {
+    private ArrayList<Integer> removeZeros(List<Integer> integers) {
         ArrayList<Integer> result = new ArrayList<>();
         for (Integer integer : integers) {
             if (integer != 0) result.add(integer);
@@ -27,7 +44,7 @@ public class Game {
         return result;
     }
 
-    private  ArrayList<Integer> addZeros(ArrayList<Integer> integers, int size) {
+    private ArrayList<Integer> addZeros(ArrayList<Integer> integers, int size) {
         ArrayList<Integer> result = new ArrayList<>(integers);
         while (result.size() != size) {
             result.add(0);
@@ -38,4 +55,6 @@ public class Game {
     public ArrayList<Integer> moveLeft(ArrayList<Integer> integers) {
         return addZeros(addSameNeighbours(removeZeros(integers)), integers.size());
     }
+
+
 }
