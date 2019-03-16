@@ -69,6 +69,19 @@ public class Game {
         }
     }
 
+    private void transpose(){
+        for (int rowIndex = 0; rowIndex < this.board.size(); rowIndex++) {
+            for (int columnIndex = rowIndex+1; columnIndex < this.board.size(); columnIndex++) {
+                ArrayList<Integer> row = this.board.get(rowIndex);
+                ArrayList<Integer> column = this.board.get(columnIndex);
+                int temp1 = row.get(columnIndex);
+                int temp2 = column.get(rowIndex);
+                row.set(columnIndex,temp2);
+                column.set(rowIndex,temp1);
+            }
+        }
+    }
+
     private void moveLeftBoard(){
         for (int row = 0; row < this.board.size(); row++) {
             this.board.set(row,moveLeft(this.board.get(row)));
@@ -79,5 +92,17 @@ public class Game {
         reverseBoard();
         moveLeftBoard();
         reverseBoard();
+    }
+
+    private void moveUpBoard(){
+        transpose();
+        moveLeftBoard();
+        transpose();
+    }
+
+    private void moveDownBoard(){
+        transpose();
+        moveRightBoard();
+        transpose();
     }
 }
