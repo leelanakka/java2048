@@ -1,7 +1,9 @@
 package com.games._2048;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Game {
 
@@ -121,5 +123,26 @@ public class Game {
         transpose();
         moveRightBoard();
         transpose();
+    }
+
+    public boolean makeMove(String move){
+        switch (move) {
+            case "l":
+                moveLeftBoard();
+                break;
+            case "r":
+                moveRightBoard();
+                break;
+            case "u":
+                moveUpBoard();
+                break;
+            case "d":
+                moveDownBoard();
+                break;
+            default:
+                return false;
+        }
+        putTwoAtRandomEmptyPlaces();
+        return true;
     }
 }
