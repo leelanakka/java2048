@@ -5,20 +5,37 @@ import java.util.List;
 
 public class Game {
 
-    private ArrayList<ArrayList<Integer>> board;
+    private ArrayList<ArrayList<Integer>> board = new ArrayList<>();
     private String PlayerName;
+    private int size;
 
     public Game(String playerName, int size) {
-        this.board = initializeBoard(size);
+        this.size = size;
+        initializeBoard();
         this.PlayerName = playerName;
     }
 
-    private ArrayList<ArrayList<Integer>> initializeBoard(int size) {
-        ArrayList<ArrayList<Integer>> integers = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            integers.add(addZeros(new ArrayList<>(), size));
+    public ArrayList<ArrayList<Integer>> getBoard() {
+        return board;
+    }
+
+    private void putTwoAtRandomEmptyPlaces(){
+        int position = (int) (Math.random() * size*size);
+        int row = (int) Math.ceil(position % (size*size) /size);
+        int index = (position%size);
+        if(board.get(row).get(index)==0){
+            board.get(row).set(index,2);
+            return;
         }
-        return integers;
+        putTwoAtRandomEmptyPlaces();
+    }
+
+    private void initializeBoard() {
+        for (int i = 0; i < size; i++) {
+            board.add(addZeros(new ArrayList<>(), size));
+        }
+        this.putTwoAtRandomEmptyPlaces();
+        this.putTwoAtRandomEmptyPlaces();
     }
 
     private ArrayList<Integer> addSameNeighbours(ArrayList<Integer> integers) {
