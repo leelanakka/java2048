@@ -9,13 +9,12 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your name :- ");
         String playerName = scanner.next();
-        Game game = new Game(playerName, 4);
+        Game game = new Game("Sai", 4);
 
         System.out.println("welcome " + game.getPlayerName() + " to 2048 world ");
         printBoard(game.getBoard());
 
-
-        while (true) {
+        while (!game.isGameEnded()) {
             System.out.println("Enter the which side you want to swipe ");
             String input = scanner.next();
             if (input.equals("q")) break;
@@ -23,11 +22,12 @@ public class Main {
                System.out.println("Invalid input");
            }
             printBoard(game.getBoard());
-            if(game.isWon()){
-                System.out.println("you won...! ");
-                break;
-            }
         }
+        if(game.isWon()){
+            System.out.println("you won");
+            return;
+        }
+        System.out.println("You lost");
     }
 
 

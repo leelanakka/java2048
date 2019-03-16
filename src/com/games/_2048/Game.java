@@ -9,11 +9,15 @@ public class Game {
     private ArrayList<ArrayList<Integer>> board = new ArrayList<>();
     private String PlayerName;
     private int size;
+    private boolean isGameEnded;
+    private boolean isWon;
 
     public Game(String playerName, int size) {
         this.size = size;
         initializeBoard();
         this.PlayerName = playerName;
+        this.isGameEnded = false;
+        this.isWon = false;
     }
 
     public String getPlayerName() {
@@ -25,6 +29,9 @@ public class Game {
     }
 
     private void putTwoAtRandomEmptyPlaces() {
+        if(!canPutRandom()){
+            return;
+        }
         int position = (int) (Math.random() * size * size);
         int row = (int) Math.ceil(position % (size * size) / size);
         int index = (position % size);
@@ -35,6 +42,14 @@ public class Game {
         putTwoAtRandomEmptyPlaces();
     }
 
+    private boolean canPutRandom(){
+        for (ArrayList<Integer> row : this.board) {
+            if(row.contains(0)){
+                return true;
+            }
+        }
+        return false;
+    }
     private void initializeBoard() {
         for (int i = 0; i < size; i++) {
             board.add(addZeros(new ArrayList<>(), size));
@@ -77,9 +92,9 @@ public class Game {
         return addZeros(addSameNeighbours(removeZeros(integers)), integers.size());
     }
 
-    private ArrayList<Integer> reverse(ArrayList<Integer> row) {
+    private ArrayList<Integer> reverse(ArrayList<Integer> row){
         ArrayList<Integer> reversedRow = new ArrayList<>();
-        for (int i = row.size() - 1; i >= 0; i--) {
+        for (int i = row.size()-1; i >= 0; i--) {
             reversedRow.add(row.get(i));
         }
         return reversedRow;
@@ -91,7 +106,37 @@ public class Game {
         }
     }
 
-    private void transpose() {
+    private boolean canMove(ArrayList<Integer> integers){
+        if(integers.contains(0)){
+            return true;
+        }
+        for (int i = 0; i < integers.size()-1; i++) {
+            if(integers.get(i).equals(integers.get(i+1)))
+                return true;
+        }
+        return false;
+    }
+
+    private boolean checkByRows(){
+        for (int row = 0; row < this.board.size(); row++) {
+            if(canMove(this.board.get(row)))
+                return true;
+        }
+        return false;
+    }
+
+    private boolean checkColumns(){
+        transpose();
+        boolean isLost = checkByRows();
+        transpose();
+        return isLost;
+    }
+
+    private boolean canContinue(){
+        return checkByRows() || checkColumns();
+    }
+
+    private void transpose(){
         for (int rowIndex = 0; rowIndex < this.board.size(); rowIndex++) {
             for (int columnIndex = rowIndex + 1; columnIndex < this.board.size(); columnIndex++) {
                 ArrayList<Integer> row = this.board.get(rowIndex);
@@ -128,7 +173,10 @@ public class Game {
         transpose();
     }
 
-    public boolean makeMove(String move) {
+    public boolean makeMove(String move){
+        if(this.isGameEnded){
+            return false;
+        }
         switch (move) {
             case "l":
                 moveLeftBoard();
@@ -146,12 +194,25 @@ public class Game {
                 return false;
         }
         putTwoAtRandomEmptyPlaces();
+        boolean isWon = hasWon();
+        if(isWon || !canContinue()){
+            this.isGameEnded = true;
+            this.isWon = isWon;
+        }
         return true;
     }
 
-    public boolean isWon(){
+    public boolean isGameEnded() {
+        return this.isGameEnded;
+    }
+
+    public boolean isWon() {
+        return this.isWon;
+    }
+
+    private boolean hasWon(){
         for (ArrayList<Integer> row: this.board) {
-            if(row.contains(128)){
+            if(row.contains(2048)){
                 return true;
             }
         }
