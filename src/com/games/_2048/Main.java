@@ -1,13 +1,27 @@
 package com.games._2048;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-        Game game = new Game("leela",4);
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter your name :- ");
+        String playerName = scanner.next();
+        Game game = new Game(playerName, 4);
+
+        System.out.println("welcome " + game.getPlayerName() + " to 2048 world ");
         printBoard(game.getBoard());
+
+
+        while (true) {
+            System.out.println("Enter the which side you want to swipe ");
+            String input = scanner.next();
+            if (input.equals("q")) break;
+            game.makeMove(input);
+            printBoard(game.getBoard());
+        }
     }
 
 
