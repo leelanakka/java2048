@@ -118,9 +118,10 @@ public class Game {
     }
 
     private boolean checkByRows() {
-        for (int row = 0; row < this.board.size(); row++) {
-            if (canMove(this.board.get(row)))
+        for (ArrayList<Integer> integers : this.board) {
+            if (canMove(integers)) {
                 return true;
+            }
         }
         return false;
     }
@@ -149,27 +150,27 @@ public class Game {
         }
     }
 
-    private void moveLeftBoard() {
+    private void moveBoardLeft() {
         for (int row = 0; row < this.board.size(); row++) {
             this.board.set(row, moveLeft(this.board.get(row)));
         }
     }
 
-    private void moveRightBoard() {
+    private void moveBoardRight() {
         reverseBoard();
-        moveLeftBoard();
+        moveBoardLeft();
         reverseBoard();
     }
 
-    private void moveUpBoard() {
+    private void moveBoardUp() {
         transpose();
-        moveLeftBoard();
+        moveBoardLeft();
         transpose();
     }
 
-    private void moveDownBoard() {
+    private void moveBoardDown() {
         transpose();
-        moveRightBoard();
+        moveBoardRight();
         transpose();
     }
 
@@ -179,16 +180,16 @@ public class Game {
         }
         switch (move) {
             case "l":
-                moveLeftBoard();
+                moveBoardLeft();
                 break;
             case "r":
-                moveRightBoard();
+                moveBoardRight();
                 break;
             case "u":
-                moveUpBoard();
+                moveBoardUp();
                 break;
             case "d":
-                moveDownBoard();
+                moveBoardDown();
                 break;
             default:
                 return false;
