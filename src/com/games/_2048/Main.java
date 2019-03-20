@@ -23,6 +23,7 @@ public class Main {
             }
             printBoard(game.getBoard());
         }
+
         if (game.isWon()) {
             System.out.println("you won");
             return;

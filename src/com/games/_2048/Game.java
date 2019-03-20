@@ -3,7 +3,7 @@ package com.games._2048;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Game {
+class Game {
 
     private ArrayList<ArrayList<Integer>> board = new ArrayList<>();
     private String PlayerName;
@@ -11,7 +11,7 @@ public class Game {
     private boolean isGameEnded;
     private boolean isWon;
 
-    public Game(String playerName, int size) {
+    Game(String playerName, int size) {
         this.size = size;
         initializeBoard();
         this.PlayerName = playerName;
@@ -19,11 +19,11 @@ public class Game {
         this.isWon = false;
     }
 
-    public String getPlayerName() {
+    String getPlayerName() {
         return PlayerName;
     }
 
-    public ArrayList<ArrayList<Integer>> getBoard() {
+    ArrayList<ArrayList<Integer>> getBoard() {
         return board;
     }
 
@@ -41,7 +41,7 @@ public class Game {
         putTwoAtRandomEmptyPlaces();
     }
 
-    private boolean canPutRandom() {
+    boolean canPutRandom() {
         for (ArrayList<Integer> row : this.board) {
             if (row.contains(0)) {
                 return true;
@@ -50,7 +50,7 @@ public class Game {
         return false;
     }
 
-    private void initializeBoard() {
+    void initializeBoard() {
         for (int i = 0; i < size; i++) {
             board.add(addZeros(new ArrayList<>(), size));
         }
@@ -58,7 +58,7 @@ public class Game {
         this.putTwoAtRandomEmptyPlaces();
     }
 
-    private ArrayList<Integer> addSameNeighbours(ArrayList<Integer> integers) {
+    ArrayList<Integer> addSameNeighbours(ArrayList<Integer> integers) {
         ArrayList<Integer> result = new ArrayList<>();
         for (int i = 0; i < integers.size(); i++) {
             if (i != integers.size() - 1 && integers.get(i).equals(integers.get(i + 1))) {
@@ -92,7 +92,7 @@ public class Game {
         return addZeros(addSameNeighbours(removeZeros(integers)), integers.size());
     }
 
-    private ArrayList<Integer> reverse(ArrayList<Integer> row) {
+    ArrayList<Integer> reverse(ArrayList<Integer> row) {
         ArrayList<Integer> reversedRow = new ArrayList<>();
         for (int i = row.size() - 1; i >= 0; i--) {
             reversedRow.add(row.get(i));
@@ -106,7 +106,7 @@ public class Game {
         }
     }
 
-    private boolean canMove(ArrayList<Integer> integers) {
+     boolean canMove(ArrayList<Integer> integers) {
         if (integers.contains(0)) {
             return true;
         }
@@ -174,7 +174,7 @@ public class Game {
         transpose();
     }
 
-    public boolean makeMove(String move) {
+    boolean makeMove(String move) {
         if (this.isGameEnded) {
             return false;
         }
@@ -203,11 +203,11 @@ public class Game {
         return true;
     }
 
-    public boolean isGameEnded() {
+    boolean isGameEnded() {
         return this.isGameEnded;
     }
 
-    public boolean isWon() {
+    boolean isWon() {
         return this.isWon;
     }
 
