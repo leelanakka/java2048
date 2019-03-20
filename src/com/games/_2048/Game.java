@@ -128,9 +128,9 @@ class Game {
 
     private boolean checkColumns() {
         transpose();
-        boolean isLost = checkByRows();
+        boolean canMove = checkByRows();
         transpose();
-        return isLost;
+        return canMove;
     }
 
     private boolean canContinue() {
